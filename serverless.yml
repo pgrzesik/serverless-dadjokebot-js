@@ -1,0 +1,20 @@
+service: serverless-dadjokebot-js 
+
+custom:
+  environment: ${file(.env.yml):default}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  environment:
+    TWITTER_CONSUMER_API_KEY: ${self:custom.environment.TWITTER_CONSUMER_API_KEY}
+    TWITTER_CONSUMER_SECRET_API_KEY: ${self:custom.environment.TWITTER_CONSUMER_SECRET_API_KEY}
+    TWITTER_ACCESS_TOKEN_KEY: ${self:custom.environment.TWITTER_ACCESS_TOKEN_KEY}
+    TWITTER_ACCESS_TOKEN_SECRET: ${self:custom.environment.TWITTER_ACCESS_TOKEN_SECRET}
+
+
+functions:
+  joke:
+    handler: handler.joke
+    events:
+      - schedule: rate(6 hours)
